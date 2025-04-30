@@ -1,0 +1,69 @@
+<div class="settings-container">
+  <div class="settings-header">
+    <h1>Settings</h1>
+    <p>Manage your application preferences</p>
+  </div>
+  
+  <mat-card class="settings-card">
+    <mat-card-content>
+      <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
+        <h2>Notifications</h2>
+        
+        <div class="form-field">
+          <mat-slide-toggle formControlName="emailNotifications" color="primary">
+            Email Notifications
+          </mat-slide-toggle>
+          <div class="setting-description">
+            Receive appointment reminders and updates via email
+          </div>
+        </div>
+        
+        <div class="form-field">
+          <mat-slide-toggle formControlName="smsNotifications" color="primary">
+            SMS Notifications
+          </mat-slide-toggle>
+          <div class="setting-description">
+            Receive appointment reminders and updates via SMS
+          </div>
+        </div>
+        
+        <mat-divider class="section-divider"></mat-divider>
+        
+        <h2>Appearance</h2>
+        
+        <div class="form-field">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Theme</mat-label>
+            <mat-select formControlName="theme">
+              <mat-option value="light">Light</mat-option>
+              <mat-option value="dark">Dark</mat-option>
+              <mat-option value="system">System Default</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        
+        <mat-divider class="section-divider"></mat-divider>
+        
+        <h2>Language</h2>
+        
+        <div class="form-field">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Language</mat-label>
+            <mat-select formControlName="language">
+              <mat-option value="en">English</mat-option>
+              <mat-option value="es">Spanish</mat-option>
+              <mat-option value="fr">French</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="loading">
+            <mat-spinner diameter="20" *ngIf="loading" class="spinner-margin"></mat-spinner>
+            <span *ngIf="!loading">Save Settings</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

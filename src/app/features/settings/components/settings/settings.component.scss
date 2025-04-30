@@ -1,0 +1,60 @@
+.settings-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.settings-header {
+  margin-bottom: 2rem;
+  
+  h1 {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  
+  p {
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.settings-card {
+  margin-bottom: 2rem;
+}
+
+h2 {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.form-field {
+  margin-bottom: 1.5rem;
+}
+
+.setting-description {
+  margin-top: 0.5rem;
+  margin-left: 2rem;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.9rem;
+}
+
+.section-divider {
+  margin: 2rem 0;
+}
+
+.form-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.spinner-margin {
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .settings-container {
+    padding: 1rem;
+  }
+}

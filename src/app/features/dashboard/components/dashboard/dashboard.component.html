@@ -1,0 +1,185 @@
+<div class="dashboard-container">
+  <div class="welcome-section" *ngIf="currentUser$ | async as user">
+    <h1>Welcome, {{ user.displayName || 'Therapist' }}</h1>
+    <p class="date">{{ today | date:'EEEE, MMMM d, y' }}</p>
+  </div>
+  
+  <div class="stats-cards">
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-value">{{ upcomingAppointments.length }}</div>
+        <div class="stat-label">Upcoming Appointments</div>
+      </mat-card-content>
+    </mat-card>
+    
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-value">{{ activeClients }}</div>
+        <div class="stat-label">Active Clients</div>
+      </mat-card-content>
+    </mat-card>
+    
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-value">{{ remindersSent }}</div>
+        <div class="stat-label">Reminders Sent</div>
+      </mat-card-content>
+    </mat-card>
+    
+    <mat-card class="stat-card">
+      <mat-card-content>
+        <div class="stat-value">{{ totalAppointments }}</div>
+        <div class="stat-label">Total Appointments</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  <div class="dashboard-row">
+    <mat-card class="dashboard-card upcoming-appointments">
+      <mat-card-header>
+        <mat-card-title>Today's Appointments</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let appointment of upcomingAppointments">
+            <div class="appointment-item">
+              <div class="appointment-time">{{ appointment.date | date:'shortTime' }}</div>
+              <div class="appointment-client">{{ appointment.clientName }}</div>
+              <div class="appointment-status">
+                <mat-chip [color]="appointment.status === 'confirmed' ? 'primary' : 'accent'" selected>
+                  {{ appointment.status }}
+                </mat-chip>
+              </div>
+            </div>
+          </mat-list-item>
+          
+          <mat-list-item *ngIf="upcomingAppointments.length === 0">
+            <div class="no-data">No appointments scheduled for today</div>
+          </mat-list-item>
+        </mat-list>
+        
+        <div class="view-all">
+          <a mat-button color="primary" routerLink="/appointments">View All Appointments</a>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    
+    <mat-card class="dashboard-card recent-clients">
+      <mat-card-header>
+        <mat-card-title>Recent Clients</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let client of recentClients">
+            <div class="client-item">
+              <div class="client-name">{{ client.name }}</div>
+              <div class="client-last-seen">Last seen: {{ client.lastAppointment | date:'mediumDate' }}</div>
+              <div class="client-status">
+                <mat-chip [color]="client.status === 'active' ? 'primary' : 'warn'" selected>
+                  {{ client.status }}
+                </mat-chip>
+              </div>
+            </div>
+          </mat-list-item>
+          
+          <mat-list-item *ngIf="recentClients.length === 0">
+            <div class="no-data">No recent clients</div>
+          </mat-list-item>
+        </mat-list>
+        
+        <div class="view-all">
+          <a mat-button color="primary" routerLink="/clients">View All Clients</a>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  <div class="dashboard-row charts">
+    <mat-card class="dashboard-card chart-card">
+      <mat-card-header>
+        <mat-card-title>Revenue</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="chart-container">
+          <!-- Chart will be rendered here using Chart.js -->
+          <div class="chart-placeholder">
+            <div class="chart-mock-bar" style="height: 60%;"></div>
+            <div class="chart-mock-bar" style="height: 70%;"></div>
+            <div class="chart-mock-bar" style="height: 65%;"></div>
+            <div class="chart-mock-bar" style="height: 80%;"></div>
+            <div class="chart-mock-bar" style="height: 85%;"></div>
+            <div class="chart-mock-bar" style="height: 90%;"></div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    
+    <mat-card class="dashboard-card chart-card">
+      <mat-card-header>
+        <mat-card-title>Missed Sessions</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="chart-container">
+          <!-- Chart will be rendered here using Chart.js -->
+          <div class="chart-placeholder">
+            <div class="chart-mock-bar missed" style="height: 30%;"></div>
+            <div class="chart-mock-bar missed" style="height: 20%;"></div>
+            <div class="chart-mock-bar missed" style="height: 40%;"></div>
+            <div class="chart-mock-bar missed" style="height: 10%;"></div>
+            <div class="chart-mock-bar missed" style="height: 20%;"></div>
+            <div class="chart-mock-bar missed" style="height: 10%;"></div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    
+    <mat-card class="dashboard-card chart-card">
+      <mat-card-header>
+        <mat-card-title>Client Satisfaction</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="chart-container">
+          <!-- Chart will be rendered here using Chart.js -->
+          <div class="chart-placeholder pie">
+            <div class="pie-segment" style="transform: rotate(0deg); background-color: rgba(76, 175, 80, 0.5);"></div>
+            <div class="pie-segment" style="transform: rotate(270deg); background-color: rgba(156, 204, 101, 0.5);"></div>
+            <div class="pie-segment" style="transform: rotate(315deg); background-color: rgba(255, 193, 7, 0.5);"></div>
+            <div class="pie-segment" style="transform: rotate(330deg); background-color: rgba(255, 152, 0, 0.5);"></div>
+            <div class="pie-segment" style="transform: rotate(345deg); background-color: rgba(244, 67, 54, 0.5);"></div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  <div class="dashboard-row">
+    <mat-card class="dashboard-card full-width">
+      <mat-card-header>
+        <mat-card-title>Quick Actions</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="quick-actions">
+          <button mat-raised-button color="primary" routerLink="/clients/new">
+            <mat-icon>person_add</mat-icon>
+            Add New Client
+          </button>
+          
+          <button mat-raised-button color="primary" routerLink="/appointments/new">
+            <mat-icon>event</mat-icon>
+            Schedule Appointment
+          </button>
+          
+          <button mat-raised-button color="primary" routerLink="/forms/new">
+            <mat-icon>assignment</mat-icon>
+            Create Intake Form
+          </button>
+          
+          <button mat-raised-button color="primary" routerLink="/notes/new">
+            <mat-icon>note_add</mat-icon>
+            Add Session Note
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

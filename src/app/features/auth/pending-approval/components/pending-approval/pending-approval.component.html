@@ -1,0 +1,29 @@
+<div class="pending-approval-container">
+  <mat-card class="pending-approval-card">
+    <mat-card-header>
+      <mat-card-title>Account Pending Approval</mat-card-title>
+      <mat-card-subtitle>Your account is awaiting admin approval</mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="pending-icon">
+        <mat-icon color="accent">hourglass_empty</mat-icon>
+      </div>
+      
+      <div class="message">
+        <p>Thank you for registering with MED Clinic!</p>
+        <p>Your account <strong>{{ email }}</strong> has been created successfully, but requires admin approval before you can access the system.</p>
+        <p>This usually takes 1-2 business days. You will receive an email notification once your account has been approved.</p>
+        <p>If you have any questions, please contact our support team.</p>
+      </div>
+    </mat-card-content>
+    
+    <mat-card-actions>
+      <div class="actions">
+        <button mat-raised-button color="primary" (click)="logout()">
+          Log Out
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>

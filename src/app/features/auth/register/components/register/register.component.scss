@@ -1,0 +1,44 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  padding: 2rem;
+}
+
+.register-card {
+  max-width: 500px;
+  width: 100%;
+}
+
+.form-field {
+  margin-bottom: 1rem;
+}
+
+.form-actions {
+  margin-top: 2rem;
+}
+
+.spinner-margin {
+  margin: 0 auto;
+}
+
+.login-link {
+  color: #3f51b5;
+  text-decoration: none;
+  font-weight: 500;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+@media (max-width: 599px) {
+  .register-container {
+    padding: 1rem;
+  }
+  
+  .register-card {
+    max-width: 100%;
+  }
+}

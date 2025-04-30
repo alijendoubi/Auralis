@@ -1,0 +1,53 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <h1>My Profile</h1>
+    <p>Manage your personal information and preferences</p>
+  </div>
+  
+  <mat-card class="profile-card">
+    <mat-card-content>
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <div class="form-field">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Full Name</mat-label>
+            <input matInput formControlName="displayName" placeholder="Enter your full name">
+            <mat-error *ngIf="profileForm.get('displayName')?.hasError('required')">
+              Full name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        
+        <div class="form-field">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" placeholder="Your email" readonly>
+            <mat-hint>Email cannot be changed</mat-hint>
+          </mat-form-field>
+        </div>
+        
+        <div class="form-field">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Specialties</mat-label>
+            <input matInput formControlName="specialties" placeholder="E.g., Anxiety, Depression, PTSD (comma separated)">
+            <mat-hint>Enter your specialties separated by commas</mat-hint>
+          </mat-form-field>
+        </div>
+        
+        <div class="form-field">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Professional Bio</mat-label>
+            <textarea matInput formControlName="bio" placeholder="Tell us about your experience and qualifications" rows="4"></textarea>
+            <mat-hint>This information will be visible to clients</mat-hint>
+          </mat-form-field>
+        </div>
+        
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid || loading">
+            <mat-spinner diameter="20" *ngIf="loading" class="spinner-margin"></mat-spinner>
+            <span *ngIf="!loading">Save Changes</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

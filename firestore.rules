@@ -1,0 +1,160 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    function isApproved() {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isApproved == true;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isTherapist(therapistId) {
+      return isAuthenticated() && 
+        (request.auth.uid == therapistId || isAdmin());
+    }
+    
+    // Users collection
+    match /users/{userId} {
+      // Anyone can read their own user document
+      // Only admins can read other user documents
+      allow read: if isOwner(userId) || isAdmin();
+      
+      // Anyone can create their own user document
+      allow create: if isOwner(userId);
+      
+      // Users can update their own documents, but not role or isApproved fields
+      // Admins can update any user document
+      allow update: if (isOwner(userId) && 
+                        !request.resource.data.diff(resource.data).affectedKeys()
+                          .hasAny(['role', 'isApproved'])) || 
+                      isAdmin();
+      
+      // Only admins can delete user documents
+      allow delete: if isAdmin();
+    }
+    
+    // Clients collection
+    match /clients/{clientId} {
+      // Therapists can read/write their own clients
+      // Admins can read/write any client
+      allow read, write: if isApproved() && 
+        (resource.data.therapistId == request.auth.uid || isAdmin());
+      
+      // Allow creation if the therapist is setting themselves as the therapist
+      allow create: if isApproved() && 
+        request.resource.data.therapistId == request.auth.uid;
+    }
+    
+    // Appointments collection
+    match /appointments/{appointmentId} {
+      // Therapists can read/write their own appointments
+      // Admins can read/write any appointment
+      allow read, write: if isApproved() && 
+        (resource.data.therapistId == request.auth.uid || isAdmin());
+      
+      // Allow creation if the therapist is setting themselves as the therapist
+      allow create: if isApproved() && 
+        request.resource.data.therapistId == request.auth.uid;
+    }
+    
+    // Forms collection
+    match /forms/{formId} {
+      // Therapists can read/write their own forms
+      // Admins can read/write any form
+      allow read, write: if isApproved() && 
+        (resource.data.therapistId == request.auth.uid || isAdmin());
+      
+      // Allow creation if the therapist is setting themselves as the therapist
+      allow create: if isApproved() && 
+        request.resource.data.therapistId == request.auth.uid;
+    }
+    
+    // Form responses collection
+    match /formResponses/{responseId} {
+      // Therapists can read responses for their clients
+      // Admins can read any response
+      allow read: if isApproved() && 
+        (get(/databases/$(database)/documents/clients/$(resource.data.clientId)).data.therapistId == request.auth.uid || 
+         isAdmin());
+      
+      // Clients can create responses for themselves
+      allow create: if isAuthenticated();
+    }
+    
+    // Notes collection
+    match /notes/{noteId} {
+      // Therapists can read/write their own notes
+      // Admins can read/write any note
+      allow read, write: if isApproved() && 
+        (resource.data.therapistId == request.auth.uid || isAdmin());
+      
+      // Allow creation if the therapist is setting themselves as the therapist
+      allow create: if isApproved() && 
+        request.resource.data.therapistId == request.auth.uid;
+    }
+    
+    // Payments collection
+    match /payments/{paymentId} {
+      // Therapists can read/write their own payments
+      // Admins can read/write any payment
+      allow read, write: if isApproved() && 
+        (resource.data.therapistId == request.auth.uid || isAdmin());
+      
+      // Allow creation if the therapist is setting themselves as the therapist
+      allow create: if isApproved() && 
+        request.resource.data.therapistId == request.auth.uid;
+    }
+    
+    // Reviews collection
+    match /reviews/{reviewId} {
+      // Therapists can read reviews for their appointments
+      // Admins can read any review
+      allow read: if isApproved() && 
+        (get(/databases/$(database)/documents/appointments/$(resource.data.appointmentId)).data.therapistId == request.auth.uid || 
+         isAdmin());
+      
+      // Clients can create reviews for their appointments
+      allow create: if isAuthenticated() && 
+        get(/databases/$(database)/documents/appointments/$(request.resource.data.appointmentId)).data.clientId == request.auth.uid;
+    }
+    
+    // Availability collection
+    match /availability/{availabilityId} {
+      // Therapists can read/write their own availability
+      // Admins can read/write any availability
+      allow read, write: if isApproved() && 
+        (resource.data.therapistId == request.auth.uid || isAdmin());
+      
+      // Allow creation if the therapist is setting themselves as the therapist
+      allow create: if isApproved() && 
+        request.resource.data.therapistId == request.auth.uid;
+      
+      // Anyone can read availability (for booking)
+      allow read: if isAuthenticated();
+    }
+    
+    // Reminders collection
+    match /reminders/{reminderId} {
+      // Therapists can read/write their own reminders
+      // Admins can read/write any reminder
+      allow read, write: if isApproved() && 
+        (resource.data.therapistId == request.auth.uid || isAdmin());
+      
+      // Allow creation if the therapist is setting themselves as the therapist
+      allow create: if isApproved() && 
+        request.resource.data.therapistId == request.auth.uid;
+    }
+  }
+}

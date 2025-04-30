@@ -1,0 +1,205 @@
+.dashboard-container {
+  padding: 16px;
+}
+
+.welcome-section {
+  margin-bottom: 24px;
+  
+  h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 500;
+  }
+  
+  .date {
+    margin: 4px 0 0;
+    color: #757575;
+    font-size: 16px;
+  }
+}
+
+.stats-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+  
+  .stat-card {
+    text-align: center;
+    
+    .stat-value {
+      font-size: 32px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: #3f51b5;
+    }
+    
+    .stat-label {
+      font-size: 14px;
+      color: #757575;
+    }
+  }
+}
+
+.dashboard-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+  
+  &.charts {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.dashboard-card {
+  height: 100%;
+  
+  &.full-width {
+    grid-column: 1 / -1;
+  }
+}
+
+.appointment-item, .client-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 8px 0;
+  
+  .appointment-time, .client-name {
+    font-weight: 500;
+    flex: 1;
+  }
+  
+  .appointment-client, .client-last-seen {
+    flex: 2;
+  }
+  
+  .appointment-status, .client-status {
+    flex: 1;
+    text-align: right;
+  }
+}
+
+.view-all {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.no-data {
+  color: #757575;
+  font-style: italic;
+  text-align: center;
+  padding: 16px;
+}
+
+.chart-container {
+  height: 200px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+}
+
+.chart-placeholder {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: flex-end;
+  justify-content: space-around;
+  
+  &.pie {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  
+  .chart-mock-bar {
+    width: 30px;
+    background-color: rgba(63, 81, 181, 0.7);
+    border-radius: 4px 4px 0 0;
+    
+    &.missed {
+      background-color: rgba(244, 67, 54, 0.7);
+    }
+  }
+  
+  .pie-segment {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-origin: center;
+    clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 50% 0%);
+  }
+}
+
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  
+  button {
+    display: flex;
+    align-items: center;
+    
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 1024px) {
+  .stats-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .dashboard-row.charts {
+    grid-template-columns: repeat(2, 1fr);
+    
+    .dashboard-card:last-child {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-row.charts {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .appointment-item, .client-item {
+    flex-direction: column;
+    align-items: flex-start;
+    
+    .appointment-time, .client-name {
+      margin-bottom: 4px;
+    }
+    
+    .appointment-client, .client-last-seen {
+      margin-bottom: 4px;
+    }
+    
+    .appointment-status, .client-status {
+      align-self: flex-start;
+    }
+  }
+  
+  .quick-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

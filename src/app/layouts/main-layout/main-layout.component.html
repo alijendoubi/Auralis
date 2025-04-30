@@ -1,0 +1,114 @@
+<div class="app-container">
+  <mat-sidenav-container class="sidenav-container">
+    <!-- Sidebar -->
+    <mat-sidenav #sidenav mode="side" opened class="sidenav" [fixedInViewport]="true">
+      <div class="sidenav-header">
+        <img src="assets/images/logo.png" alt="MED Clinic Logo" class="logo">
+        <h2>MED Clinic</h2>
+      </div>
+      
+      <mat-nav-list>
+        <a mat-list-item routerLink="/dashboard" routerLinkActive="active">
+          <mat-icon>dashboard</mat-icon>
+          <span>Dashboard</span>
+        </a>
+        
+        <a mat-list-item routerLink="/clients" routerLinkActive="active">
+          <mat-icon>people</mat-icon>
+          <span>Clients</span>
+        </a>
+        
+        <a mat-list-item routerLink="/appointments" routerLinkActive="active">
+          <mat-icon>event</mat-icon>
+          <span>Appointments</span>
+        </a>
+        
+        <a mat-list-item routerLink="/forms" routerLinkActive="active">
+          <mat-icon>assignment</mat-icon>
+          <span>Intake Forms</span>
+        </a>
+        
+        <a mat-list-item routerLink="/notes" routerLinkActive="active">
+          <mat-icon>note</mat-icon>
+          <span>Session Notes</span>
+        </a>
+        
+        <a mat-list-item routerLink="/billing" routerLinkActive="active">
+          <mat-icon>payment</mat-icon>
+          <span>Billing</span>
+        </a>
+        
+        <a mat-list-item routerLink="/reviews" routerLinkActive="active">
+          <mat-icon>star</mat-icon>
+          <span>Reviews</span>
+        </a>
+        
+        <a mat-list-item routerLink="/admin" routerLinkActive="active" *ngIf="isAdmin$ | async">
+          <mat-icon>admin_panel_settings</mat-icon>
+          <span>Admin</span>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    
+    <!-- Main content -->
+    <mat-sidenav-content class="sidenav-content">
+      <!-- Toolbar -->
+      <mat-toolbar color="primary" class="toolbar">
+        <button mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        
+        <span class="toolbar-spacer"></span>
+        
+        <button mat-icon-button [matMenuTriggerFor]="notificationsMenu" aria-label="Notifications">
+          <mat-icon>notifications</mat-icon>
+        </button>
+        
+        <button mat-icon-button [matMenuTriggerFor]="userMenu" aria-label="User menu">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        
+        <!-- Notifications menu -->
+        <mat-menu #notificationsMenu="matMenu">
+          <div class="notifications-container">
+            <h3>Notifications</h3>
+            <mat-divider></mat-divider>
+            <div class="notification-item" *ngFor="let i of [1, 2, 3]">
+              <p>Notification {{ i }}</p>
+              <small>{{ today | date:'short' }}</small>
+            </div>
+            <mat-divider></mat-divider>
+            <button mat-menu-item>View all notifications</button>
+          </div>
+        </mat-menu>
+        
+        <!-- User menu -->
+        <mat-menu #userMenu="matMenu">
+          <div class="user-info" *ngIf="currentUser$ | async as user">
+            <h3>{{ user.displayName }}</h3>
+            <p>{{ user.email }}</p>
+          </div>
+          <mat-divider></mat-divider>
+          <button mat-menu-item routerLink="/profile">
+            <mat-icon>person</mat-icon>
+            <span>Profile</span>
+          </button>
+          <button mat-menu-item routerLink="/settings">
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </mat-toolbar>
+      
+      <!-- Page content -->
+      <div class="content-container">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

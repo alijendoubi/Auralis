@@ -1,0 +1,57 @@
+<div class="login-container">
+  <div class="login-header">
+    <h1>Sign In</h1>
+    <p>Welcome back! Please sign in to continue.</p>
+  </div>
+  
+  <div *ngIf="error" class="error-message">
+    <mat-icon>error</mat-icon>
+    <span>{{ error }}</span>
+  </div>
+  
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" placeholder="Enter your email">
+      <mat-icon matPrefix>email</mat-icon>
+      <mat-error *ngIf="f['email'].errors?.['required']">Email is required</mat-error>
+      <mat-error *ngIf="f['email'].errors?.['email']">Please enter a valid email address</mat-error>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" placeholder="Enter your password">
+      <mat-icon matPrefix>lock</mat-icon>
+      <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+      <mat-error *ngIf="f['password'].errors?.['required']">Password is required</mat-error>
+    </mat-form-field>
+    
+    <div class="forgot-password">
+      <a routerLink="/auth/forgot-password">Forgot password?</a>
+    </div>
+    
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="loading || loginForm.invalid" class="full-width">
+        <mat-spinner *ngIf="loading" diameter="20" class="spinner"></mat-spinner>
+        <span *ngIf="!loading">Sign In</span>
+      </button>
+    </div>
+  </form>
+  
+  <div class="separator">
+    <span>OR</span>
+  </div>
+  
+  <div class="social-login">
+    <button mat-stroked-button (click)="loginWithGoogle()" [disabled]="loading" class="google-btn full-width">
+      <img src="assets/images/google-logo.svg" alt="Google" class="google-icon">
+      <span>Sign in with Google</span>
+    </button>
+  </div>
+  
+  <div class="register-link">
+    <p>Don't have an account? <a routerLink="/auth/register">Sign up</a></p>
+  </div>
+</div>

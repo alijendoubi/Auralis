@@ -1,0 +1,49 @@
+.pending-approval-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  padding: 2rem;
+}
+
+.pending-approval-card {
+  max-width: 500px;
+  width: 100%;
+}
+
+.pending-icon {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  
+  mat-icon {
+    font-size: 64px;
+    height: 64px;
+    width: 64px;
+  }
+}
+
+.message {
+  text-align: center;
+  margin-bottom: 2rem;
+  
+  p {
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 599px) {
+  .pending-approval-container {
+    padding: 1rem;
+  }
+  
+  .pending-approval-card {
+    max-width: 100%;
+  }
+}

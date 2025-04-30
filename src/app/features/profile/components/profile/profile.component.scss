@@ -1,0 +1,42 @@
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.profile-header {
+  margin-bottom: 2rem;
+  
+  h1 {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  
+  p {
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.profile-card {
+  margin-bottom: 2rem;
+}
+
+.form-field {
+  margin-bottom: 1rem;
+}
+
+.form-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.spinner-margin {
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 1rem;
+  }
+}

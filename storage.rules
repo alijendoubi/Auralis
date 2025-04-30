@@ -1,0 +1,87 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+        firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    function isApproved() {
+      return isAuthenticated() && 
+        firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.isApproved == true;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // User profile images
+    match /users/{userId}/profile.{extension} {
+      // Users can read/write their own profile image
+      // Admins can read/write any profile image
+      // Anyone can read profile images
+      allow read: if true;
+      allow write: if isOwner(userId) || isAdmin();
+    }
+    
+    // Client documents
+    match /clients/{clientId}/{document=**} {
+      // Therapists can read/write documents for their clients
+      // Admins can read/write any client document
+      allow read, write: if isApproved() && 
+        (firestore.get(/databases/(default)/documents/clients/$(clientId)).data.therapistId == request.auth.uid || 
+         isAdmin());
+    }
+    
+    // Form templates
+    match /forms/{formId}/{document=**} {
+      // Therapists can read/write their own form templates
+      // Admins can read/write any form template
+      // Anyone can read form templates
+      allow read: if isAuthenticated();
+      allow write: if isApproved() && 
+        (firestore.get(/databases/(default)/documents/forms/$(formId)).data.therapistId == request.auth.uid || 
+         isAdmin());
+    }
+    
+    // Form responses
+    match /formResponses/{responseId}/{document=**} {
+      // Therapists can read responses for their clients
+      // Admins can read any response
+      // Clients can create responses for themselves
+      allow read: if isApproved() && 
+        (firestore.get(/databases/(default)/documents/formResponses/$(responseId)).data.clientId == request.auth.uid || 
+         firestore.get(/databases/(default)/documents/clients/$(firestore.get(/databases/(default)/documents/formResponses/$(responseId)).data.clientId)).data.therapistId == request.auth.uid || 
+         isAdmin());
+      allow create: if isAuthenticated();
+    }
+    
+    // Session notes attachments
+    match /notes/{noteId}/{document=**} {
+      // Therapists can read/write their own note attachments
+      // Admins can read/write any note attachment
+      allow read, write: if isApproved() && 
+        (firestore.get(/databases/(default)/documents/notes/$(noteId)).data.therapistId == request.auth.uid || 
+         isAdmin());
+    }
+    
+    // Payment receipts
+    match /payments/{paymentId}/receipt.{extension} {
+      // Therapists can read/write receipts for their payments
+      // Admins can read/write any receipt
+      // Clients can read receipts for their payments
+      allow read: if isAuthenticated() && 
+        (firestore.get(/databases/(default)/documents/payments/$(paymentId)).data.clientId == request.auth.uid || 
+         firestore.get(/databases/(default)/documents/payments/$(paymentId)).data.therapistId == request.auth.uid || 
+         isAdmin());
+      allow write: if isApproved() && 
+        (firestore.get(/databases/(default)/documents/payments/$(paymentId)).data.therapistId == request.auth.uid || 
+         isAdmin());
+    }
+  }
+}
