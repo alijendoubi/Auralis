@@ -149,7 +149,7 @@ export class AuthService {
     try {
       await signOut(this.auth);
       this.currentUserSubject.next(null);
-      this.router.navigate(['/auth/login']);
+      this.router.navigate(['/']);
     } catch (error) {
       console.error('Error during sign out:', error);
       throw error;

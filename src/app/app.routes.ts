@@ -6,6 +6,13 @@ import { ApprovalGuard } from './core/guards/approval.guard';
 import { AdminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
+  // Landing page route (public)
+  {
+    path: '',
+    pathMatch: 'full',
+    loadChildren: () => import('./features/landing/landing.module').then(m => m.LandingModule)
+  },
+  
   // Auth routes
   {
     path: 'auth',
@@ -41,7 +48,7 @@ export const routes: Routes = [
   
   // Main application routes
   {
-    path: '',
+    path: 'app',
     component: MainLayoutComponent,
     canActivate: [AuthGuard, ApprovalGuard],
     children: [
@@ -100,6 +107,6 @@ export const routes: Routes = [
   // Wildcard route
   {
     path: '**',
-    redirectTo: 'dashboard'
+    redirectTo: ''
   }
 ];

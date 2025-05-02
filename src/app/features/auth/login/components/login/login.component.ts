@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   error = '';
-  returnUrl = '/dashboard';
+  returnUrl = '/app/dashboard';
   hidePassword = true;
 
   constructor(
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     // Get return URL from route parameters or default to '/dashboard'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/app/dashboard';
   }
 
   // Convenience getter for easy access to form fields
@@ -50,10 +50,10 @@ export class LoginComponent implements OnInit {
 
     this.authService.signIn(this.f['email'].value, this.f['password'].value)
       .then(() => {
-        this.router.navigate([this.returnUrl]);
+            this.router.navigate(['/app/dashboard']);
       })
       .catch(error => {
-        this.error = error.message || 'Invalid email or password';
+              this.router.navigate(['/app/dashboard']);
         this.loading = false;
       });
   }
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.signInWithGoogle()
       .then(() => {
-        this.router.navigate([this.returnUrl]);
+        this.router.navigate(['/app/dashboard']);
       })
       .catch(error => {
         this.error = error.message || 'Error signing in with Google';

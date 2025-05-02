@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <style>
+    .st0{fill:#4285F4;}
+    .st1{fill:#F8F9FA;}
+    .st2{fill:#34A853;}
+    .st3{fill:#3367D6;}
+    .st4{fill:#FFFFFF;}
+    .st5{fill:#E8EAED;}
+  </style>
+  <rect x="0" y="0" class="st1" width="600" height="400" rx="10"/>
+  <g transform="translate(100, 50)">
+    <!-- Medical Interface -->
+    <rect x="0" y="0" width="400" height="300" rx="8" class="st4"/>
+    <rect x="0" y="0" width="400" height="40" rx="8 8 0 0" class="st0"/>
+    <text x="20" y="25" font-family="Arial" font-size="16" class="st4">Auralis Dashboard</text>
+    
+    <!-- Navigation -->
+    <rect x="0" y="40" width="80" height="260" class="st5"/>
+    <circle cx="40" cy="70" r="15" class="st0"/>
+    <rect x="20" cy="100" width="40" height="8" rx="4" class="st0"/>
+    <rect x="20" cy="120" width="40" height="8" rx="4" class="st0"/>
+    <rect x="20" cy="140" width="40" height="8" rx="4" class="st0"/>
+    <rect x="20" cy="160" width="40" height="8" rx="4" class="st0"/>
+    <rect x="20" cy="180" width="40" height="8" rx="4" class="st0"/>
+    
+    <!-- Main Content -->
+    <rect x="100" y="60" width="280" height="120" rx="4" class="st5"/>
+    <rect x="120" y="80" width="240" height="10" rx="5" class="st0"/>
+    <rect x="120" y="100" width="180" height="10" rx="5" class="st0" opacity="0.7"/>
+    <rect x="120" y="120" width="200" height="10" rx="5" class="st0" opacity="0.5"/>
+    <rect x="120" y="140" width="160" height="10" rx="5" class="st0" opacity="0.3"/>
+    
+    <!-- Calendar -->
+    <rect x="100" y="200" width="130" height="120" rx="4" class="st4" stroke="#E0E0E0" stroke-width="1"/>
+    <rect x="100" y="200" width="130" height="30" rx="4 4 0 0" class="st2"/>
+    <text x="110" y="220" font-family="Arial" font-size="12" class="st4">Appointments</text>
+    <line x1="100" y1="240" x2="230" y2="240" stroke="#E0E0E0" stroke-width="1"/>
+    <line x1="100" y1="270" x2="230" y2="270" stroke="#E0E0E0" stroke-width="1"/>
+    <circle cx="130" cy="255" r="10" class="st0" opacity="0.7"/>
+    <circle cx="170" cy="255" r="10" class="st3" opacity="0.7"/>
+    <circle cx="150" cy="285" r="10" class="st2" opacity="0.7"/>
+    <circle cx="190" cy="285" r="10" class="st0" opacity="0.7"/>
+    
+    <!-- Stats -->
+    <rect x="250" y="200" width="130" height="120" rx="4" class="st4" stroke="#E0E0E0" stroke-width="1"/>
+    <rect x="250" y="200" width="130" height="30" rx="4 4 0 0" class="st3"/>
+    <text x="260" y="220" font-family="Arial" font-size="12" class="st4">Patient Stats</text>
+    <circle cx="315" cy="270" r="40" class="st4" stroke="#E0E0E0" stroke-width="1"/>
+    <path d="M 315 230 A 40 40 0 0 1 349 253 L 315 270 Z" class="st0"/>
+    <path d="M 315 270 L 349 253 A 40 40 0 0 1 344 296 Z" class="st2"/>
+    <path d="M 315 270 L 344 296 A 40 40 0 0 1 315 310 Z" class="st3"/>
+    <path d="M 315 270 L 315 310 A 40 40 0 0 1 281 296 Z" class="st0" opacity="0.5"/>
+    <path d="M 315 270 L 281 296 A 40 40 0 0 1 281 244 Z" class="st2" opacity="0.5"/>
+    <path d="M 315 270 L 281 244 A 40 40 0 0 1 315 230 Z" class="st3" opacity="0.5"/>
+  </g>
+</svg>
+

@@ -1,0 +1,277 @@
+<div class="landing-container">
+  <header class="landing-header">
+    <div class="logo-container">
+      <img src="assets/images/logo.png" alt="Auralis Logo" class="logo">
+      <h1>Auralis</h1>
+    </div>
+    <nav class="nav-actions">
+      <button mat-stroked-button (click)="navigateToLogin()">Login</button>
+      <button mat-raised-button color="primary" (click)="navigateToRegister()">Register</button>
+    </nav>
+  </header>
+
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1>Everyone's day just got easier</h1>
+      <p>Streamline your therapy practice with our all-in-one platform designed specifically for mental health professionals.</p>
+      <div class="cta-buttons">
+        <button mat-raised-button color="primary" class="btn btn-primary btn-lg" (click)="navigateToRegister()">Try for Free</button>
+        <button mat-stroked-button class="btn btn-outline btn-lg" (click)="learnMore()">
+          <mat-icon>play_circle</mat-icon> Watch Demo
+        </button>
+      </div>
+      <div class="hero-badges">
+        <div class="badge">
+          <mat-icon>verified</mat-icon>
+          <span>HIPAA Compliant</span>
+        </div>
+        <div class="badge">
+          <mat-icon>security</mat-icon>
+          <span>GDPR Ready</span>
+        </div>
+        <div class="badge">
+          <mat-icon>support_agent</mat-icon>
+          <span>24/7 Support</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="assets/images/hero-image.svg" alt="Medical professionals using Auralis">
+    </div>
+  </section>
+
+  <section id="features" class="features-section">
+    <h2>Practical tools that help make appointments happen</h2>
+    <p class="section-subtitle">Everything you need to run your therapy practice efficiently</p>
+    <div class="features-grid">
+      <mat-card class="feature-card">
+        <div class="feature-icon">
+          <mat-icon>event</mat-icon>
+        </div>
+        <h3>Smart Scheduling</h3>
+        <p>Enjoy a well-organized day with our intuitive scheduling system that helps you manage your time effectively.</p>
+        <div class="feature-detail">
+          <mat-icon>check_circle_outline</mat-icon>
+          <span>Online booking for clients</span>
+        </div>
+        <div class="feature-detail">
+          <mat-icon>check_circle_outline</mat-icon>
+          <span>Automated reminders</span>
+        </div>
+      </mat-card>
+      <mat-card class="feature-card">
+        <div class="feature-icon">
+          <mat-icon>people</mat-icon>
+        </div>
+        <h3>Client Portal</h3>
+        <p>Build stronger client connections through secure client portals, HIPAA-compliant messaging, and self-scheduling.</p>
+        <div class="feature-detail">
+          <mat-icon>check_circle_outline</mat-icon>
+          <span>Secure messaging</span>
+        </div>
+        <div class="feature-detail">
+          <mat-icon>check_circle_outline</mat-icon>
+          <span>Digital intake forms</span>
+        </div>
+      </mat-card>
+      <mat-card class="feature-card">
+        <div class="feature-icon">
+          <mat-icon>description</mat-icon>
+        </div>
+        <h3>Charting & Notes</h3>
+        <p>We've helped hundreds of clinics switch to Auralis. Our team can import scanned chart notes and customize templates.</p>
+        <div class="feature-detail">
+          <mat-icon>check_circle_outline</mat-icon>
+          <span>Customizable templates</span>
+        </div>
+        <div class="feature-detail">
+          <mat-icon>check_circle_outline</mat-icon>
+          <span>AI-powered assistance</span>
+        </div>
+      </mat-card>
+      <mat-card class="feature-card">
+        <div class="feature-icon">
+          <mat-icon>payments</mat-icon>
+        </div>
+        <h3>Billing & Payments</h3>
+        <p>Bill your visits and accept payments in just a couple of clicks, and have Auralis do all the math for you.</p>
+        <div class="feature-detail">
+          <mat-icon>check_circle_outline</mat-icon>
+          <span>Insurance processing</span>
+        </div>
+        <div class="feature-detail">
+          <mat-icon>check_circle_outline</mat-icon>
+          <span>Integrated payment gateway</span>
+        </div>
+      </mat-card>
+    </div>
+  </section>
+
+  <section class="benefits-section">
+    <div class="benefits-content">
+      <h2>Created by therapists, for therapists</h2>
+      <p class="lead">The longest-standing EMR practice management solution designed specifically for the unique needs of mental health practitioners.</p>
+      <ul class="benefits-list">
+        <li>
+          <mat-icon>check_circle</mat-icon>
+          <span>HIPAA-compliant secure data handling</span>
+        </li>
+        <li>
+          <mat-icon>check_circle</mat-icon>
+          <span>Intuitive, user-friendly interface</span>
+        </li>
+        <li>
+          <mat-icon>check_circle</mat-icon>
+          <span>Comprehensive practice management</span>
+        </li>
+        <li>
+          <mat-icon>check_circle</mat-icon>
+          <span>Real-time notifications and reminders</span>
+        </li>
+        <li>
+          <mat-icon>check_circle</mat-icon>
+          <span>Detailed analytics and reporting</span>
+        </li>
+        <li>
+          <mat-icon>check_circle</mat-icon>
+          <span>Telehealth video integration</span>
+        </li>
+        <li>
+          <mat-icon>check_circle</mat-icon>
+          <span>Mobile app for on-the-go access</span>
+        </li>
+      </ul>
+      <div class="benefits-cta">
+        <button mat-raised-button color="primary" class="btn-lg" (click)="startTrial()">Start Free Trial</button>
+        <p class="no-credit-card">No credit card required</p>
+      </div>
+    </div>
+    <div class="benefits-image">
+      <img src="assets/images/benefits-image.svg" alt="Auralis dashboard preview">
+    </div>
+  </section>
+
+  <section class="testimonials-section">
+    <h2>What our customers are saying</h2>
+    <p class="section-subtitle">Join thousands of therapists who trust Auralis for their practice management</p>
+    
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <mat-icon class="quote-icon">format_quote</mat-icon>
+          <p>Auralis has completely transformed how I manage my practice. The scheduling system is intuitive, and the client portal has improved communication with my patients.</p>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+          <div class="author-info">
+            <h4>Dr. Sarah Johnson</h4>
+            <p>Clinical Psychologist</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <mat-icon class="quote-icon">format_quote</mat-icon>
+          <p>The billing features alone have saved me countless hours each month. I can focus more on my clients and less on paperwork. Auralis is worth every penny.</p>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+          <div class="author-info">
+            <h4>Michael Rodriguez, LMFT</h4>
+            <p>Family Therapist</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <mat-icon class="quote-icon">format_quote</mat-icon>
+          <p>As someone who runs a group practice, Auralis has been a game-changer. The ability to manage multiple therapists and their schedules in one place is invaluable.</p>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+          <div class="author-info">
+            <h4>Dr. Emily Chen</h4>
+            <p>Practice Owner</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <h2>Take a peek at the future of (even smoother) clinic life</h2>
+    <p>We're always dreaming up new ways to help you out. Our team loves to share what we're working on, like:</p>
+    <div class="future-features">
+      <div class="feature-item">
+        <mat-icon>auto_awesome</mat-icon>
+        <span>Treatment Add-Ons</span>
+      </div>
+      <div class="feature-item">
+        <mat-icon>psychology</mat-icon>
+        <span>AI-powered Charting</span>
+      </div>
+      <div class="feature-item">
+        <mat-icon>chat</mat-icon>
+        <span>Secure Clinic Messaging</span>
+      </div>
+      <div class="feature-item">
+        <mat-icon>supervisor_account</mat-icon>
+        <span>Supervisor Support</span>
+      </div>
+    </div>
+    <div class="cta-buttons">
+      <button mat-raised-button color="primary" class="btn-lg" (click)="navigateToRegister()">Start Your Free Trial – No Credit Card Needed</button>
+      <button mat-stroked-button class="btn-lg" (click)="navigateToLogin()">Book a Demo</button>
+    </div>
+  </section>
+
+  <footer class="landing-footer">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img src="assets/images/logo.png" alt="Auralis Logo" class="logo-small">
+        <span>Auralis</span>
+      </div>
+      <div class="footer-links">
+        <div class="footer-column">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#">Features</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Security</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Support</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Auralis. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+</div>

@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <style>
+    .st0{fill:#4285F4;}
+    .st1{fill:#F8F9FA;}
+    .st2{fill:#34A853;}
+    .st3{fill:#3367D6;}
+    .st4{fill:#FFFFFF;}
+    .st5{fill:#E8EAED;}
+  </style>
+  <rect x="0" y="0" class="st1" width="600" height="400" rx="10"/>
+  <g transform="translate(50, 50)">
+    <!-- Device Frame -->
+    <rect x="0" y="0" width="500" height="300" rx="10" class="st4" stroke="#E0E0E0" stroke-width="2"/>
+    
+    <!-- App Header -->
+    <rect x="0" y="0" width="500" height="50" rx="10 10 0 0" class="st0"/>
+    <circle cx="25" cy="25" r="15" fill="#FFFFFF"/>
+    <text x="60" y="30" font-family="Arial" font-size="16" fill="#FFFFFF" font-weight="bold">Auralis Dashboard</text>
+    <circle cx="460" cy="25" r="15" class="st4" opacity="0.5"/>
+    
+    <!-- Sidebar -->
+    <rect x="0" y="50" width="100" height="250" fill="#F5F7FA"/>
+    <rect x="20" y="70" width="60" height="10" rx="5" class="st0" opacity="0.8"/>
+    <rect x="20" y="100" width="60" height="10" rx="5" class="st0" opacity="0.6"/>
+    <rect x="20" y="130" width="60" height="10" rx="5" class="st0" opacity="0.6"/>
+    <rect x="20" y="160" width="60" height="10" rx="5" class="st0" opacity="0.6"/>
+    <rect x="20" y="190" width="60" height="10" rx="5" class="st0" opacity="0.6"/>
+    <rect x="20" y="220" width="60" height="10" rx="5" class="st0" opacity="0.6"/>
+    <rect x="20" y="250" width="60" height="10" rx="5" class="st0" opacity="0.6"/>
+    
+    <!-- Content Area -->
+    <g transform="translate(120, 70)">
+      <!-- Stats Cards -->
+      <g transform="translate(0, 0)">
+        <rect x="0" y="0" width="110" height="80" rx="4" class="st4" stroke="#E0E0E0" stroke-width="1"/>
+        <rect x="10" y="10" width="60" height="10" rx="5" class="st0" opacity="0.8"/>
+        <text x="10" y="40" font-family="Arial" font-size="20" fill="#333333" font-weight="bold">124</text>
+        <rect x="10" y="50" width="90" height="6" rx="3" class="st5"/>
+        <rect x="10" y="50" width="70" height="6" rx="3" class="st2"/>
+      </g>
+      
+      <g transform="translate(130, 0)">
+        <rect x="0" y="0" width="110" height="80" rx="4" class="st4" stroke="#E0E0E0" stroke-width="1"/>
+        <rect x="10" y="10" width="60" height="10" rx="5" class="st3" opacity="0.8"/>
+        <text x="10" y="40" font-family="Arial" font-size="20" fill="#333333" font-weight="bold">87%</text>
+        <rect x="10" y="50" width="90" height="6" rx="3" class="st5"/>
+        <rect x="10" y="50" width="80" height="6" rx="3" class="st3"/>
+      </g>
+      
+      <g transform="translate(260, 0)">
+        <rect x="0" y="0" width="110" height="80" rx="4" class="st4" stroke="#E0E0E0" stroke-width="1"/>
+        <rect x="10" y="10" width="60" height="10" rx="5" class="st2" opacity="0.8"/>
+        <text x="10" y="40" font-family="Arial" font-size="20" fill="#333333" font-weight="bold">$12.5k</text>
+        <rect x="10" y="50" width="90" height="6" rx="3" class="st5"/>
+        <rect x="10" y="50" width="60" height="6" rx="3" class="st0"/>
+      </g>
+      
+      <!-- Chart Area -->
+      <g transform="translate(0, 100)">
+        <rect x="0" y="0" width="370" height="130" rx="4" class="st4" stroke="#E0E0E0" stroke-width="1"/>
+        <rect x="10" y="10" width="100" height="10" rx="5" class="st0" opacity="0.8"/>
+        
+        <!-- Chart Grid -->
+        <line x1="40" y1="40" x2="40" y2="110" stroke="#E0E0E0" stroke-width="1"/>
+        <line x1="90" y1="40" x2="90" y2="110" stroke="#E0E0E0" stroke-width="1"/>
+        <line x1="140" y1="40" x2="140" y2="110" stroke="#E0E0E0" stroke-width="1"/>
+        <line x1="190" y1="40" x2="190" y2="110" stroke="#E0E0E0" stroke-width="1"/>
+        <line x1="240" y1="40" x2="240" y2="110" stroke="#E0E0E0" stroke-width="1"/>
+        <line x1="290" y1="40" x2="290" y2="110" stroke="#E0E0E0" stroke-width="1"/>
+        <line x1="340" y1="40" x2="340" y2="110" stroke="#E0E0E0" stroke-width="1"/>
+        
+        <line x1="40" y1="110" x2="340" y2="110" stroke="#E0E0E0" stroke-width="1"/>
+        <line x1="40" y1="90" x2="340" y2="90" stroke="#E0E0E0" stroke-width="1"/>
+        <line x1="40" y1="70" x2="340" y2="70" stroke="#E0E0E0" stroke-width="1"/>
+        <line x1="40" y1="50" x2="340" y2="50" stroke="#E0E0E0" stroke-width="1"/>
+        
+        <!-- Chart Lines -->
+        <polyline points="40,90 90,85 140,70 190,80 240,60 290,50 340,55" 
+                 fill="none" stroke="#4285F4" stroke-width="3"/>
+        <polyline points="40,100 90,95 140,105 190,90 240,85 290,70 340,80" 
+                 fill="none" stroke="#34A853" stroke-width="3"/>
+      </g>
+    </g>
+  </g>
+</svg>
+

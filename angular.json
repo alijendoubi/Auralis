@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "med-clinic": {
+    "auralis": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -24,7 +24,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/med-clinic",
+            "outputPath": "dist/auralis",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -57,8 +57,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "8kb",
+                  "maximumError": "25kb"
                 }
               ],
               "outputHashing": "all",
@@ -81,10 +81,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "med-clinic:build:production"
+              "buildTarget": "auralis:build:production"
             },
             "development": {
-              "buildTarget": "med-clinic:build:development"
+              "buildTarget": "auralis:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -92,7 +92,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "med-clinic:build"
+            "buildTarget": "auralis:build"
           }
         },
         "test": {

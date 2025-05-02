@@ -1,4 +1,4 @@
-# MED Clinic - Mental Health SaaS Platform
+# Auralis - Mental Health SaaS Platform
 
 A comprehensive SaaS web application for therapists and small mental health clinics.
 
@@ -43,7 +43,7 @@ A comprehensive SaaS web application for therapists and small mental health clin
 
 ```bash
 git clone <repository-url>
-cd med-clinic
+cd auralis
 ```
 
 ### 2. Install dependencies and setup
@@ -157,7 +157,7 @@ The deployment script will:
 ## Project Structure
 
 ```
-med-clinic/
+auralis/
 ├── src/
 │   ├── app/
 │   │   ├── core/                 # Core functionality

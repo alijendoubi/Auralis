@@ -1,105 +1,145 @@
 <div class="dashboard-container">
-  <div class="welcome-section" *ngIf="currentUser$ | async as user">
+  <div class="welcome-section fade-in" *ngIf="currentUser$ | async as user">
     <h1>Welcome, {{ user.displayName || 'Therapist' }}</h1>
     <p class="date">{{ today | date:'EEEE, MMMM d, y' }}</p>
+    <p class="subtitle">Here's an overview of your therapy practice today</p>
   </div>
   
-  <div class="stats-cards">
-    <mat-card class="stat-card">
-      <mat-card-content>
-        <div class="stat-value">{{ upcomingAppointments.length }}</div>
-        <div class="stat-label">Upcoming Appointments</div>
-      </mat-card-content>
-    </mat-card>
+  <div class="stats-grid">
+    <div class="stat-card fade-in delay-1">
+      <div class="stat-header">
+        <h3>Appointments</h3>
+        <div class="stat-icon appointments">
+          <mat-icon>event</mat-icon>
+        </div>
+      </div>
+      <div class="stat-value">{{ upcomingAppointments.length }}</div>
+      <div class="stat-change positive">
+        <mat-icon>arrow_upward</mat-icon>
+        <span>Today's schedule</span>
+      </div>
+    </div>
     
-    <mat-card class="stat-card">
-      <mat-card-content>
-        <div class="stat-value">{{ activeClients }}</div>
-        <div class="stat-label">Active Clients</div>
-      </mat-card-content>
-    </mat-card>
+    <div class="stat-card fade-in delay-1">
+      <div class="stat-header">
+        <h3>Active Clients</h3>
+        <div class="stat-icon clients">
+          <mat-icon>people</mat-icon>
+        </div>
+      </div>
+      <div class="stat-value">{{ activeClients }}</div>
+      <div class="stat-change positive">
+        <mat-icon>arrow_upward</mat-icon>
+        <span>Current roster</span>
+      </div>
+    </div>
     
-    <mat-card class="stat-card">
-      <mat-card-content>
-        <div class="stat-value">{{ remindersSent }}</div>
-        <div class="stat-label">Reminders Sent</div>
-      </mat-card-content>
-    </mat-card>
+    <div class="stat-card fade-in delay-2">
+      <div class="stat-header">
+        <h3>Reminders</h3>
+        <div class="stat-icon revenue">
+          <mat-icon>notifications</mat-icon>
+        </div>
+      </div>
+      <div class="stat-value">{{ remindersSent }}</div>
+      <div class="stat-change positive">
+        <mat-icon>check_circle</mat-icon>
+        <span>Successfully sent</span>
+      </div>
+    </div>
     
-    <mat-card class="stat-card">
-      <mat-card-content>
-        <div class="stat-value">{{ totalAppointments }}</div>
-        <div class="stat-label">Total Appointments</div>
-      </mat-card-content>
-    </mat-card>
+    <div class="stat-card fade-in delay-2">
+      <div class="stat-header">
+        <h3>Total Sessions</h3>
+        <div class="stat-icon tasks">
+          <mat-icon>check_circle</mat-icon>
+        </div>
+      </div>
+      <div class="stat-value">{{ totalAppointments }}</div>
+      <div class="stat-change positive">
+        <mat-icon>arrow_upward</mat-icon>
+        <span>All-time sessions</span>
+      </div>
+    </div>
   </div>
   
-  <div class="dashboard-row">
-    <mat-card class="dashboard-card upcoming-appointments">
-      <mat-card-header>
-        <mat-card-title>Today's Appointments</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <mat-list>
-          <mat-list-item *ngFor="let appointment of upcomingAppointments">
-            <div class="appointment-item">
-              <div class="appointment-time">{{ appointment.date | date:'shortTime' }}</div>
-              <div class="appointment-client">{{ appointment.clientName }}</div>
-              <div class="appointment-status">
-                <mat-chip [color]="appointment.status === 'confirmed' ? 'primary' : 'accent'" selected>
-                  {{ appointment.status }}
-                </mat-chip>
-              </div>
+  <div class="dashboard-sections">
+    <div class="upcoming-appointments">
+      <div class="section-card fade-in delay-2">
+        <div class="section-header">
+          <h2>Today's Appointments</h2>
+          <div class="section-actions">
+            <button mat-icon-button>
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="appointment-list">
+          <div class="appointment-item" *ngFor="let appointment of upcomingAppointments">
+            <div class="appointment-avatar">
+              {{ appointment.clientName.charAt(0) }}{{ appointment.clientName.split(' ').length > 1 ? appointment.clientName.split(' ')[1].charAt(0) : '' }}
             </div>
-          </mat-list-item>
+            <div class="appointment-details">
+              <div class="appointment-name">{{ appointment.clientName }}</div>
+              <div class="appointment-time">{{ appointment.date | date:'shortTime' }}</div>
+            </div>
+            <div class="appointment-status" [ngClass]="appointment.status.toLowerCase()">
+              {{ appointment.status }}
+            </div>
+          </div>
           
-          <mat-list-item *ngIf="upcomingAppointments.length === 0">
-            <div class="no-data">No appointments scheduled for today</div>
-          </mat-list-item>
-        </mat-list>
+          <div class="no-data" *ngIf="upcomingAppointments.length === 0">
+            No appointments scheduled for today
+          </div>
+        </div>
         
         <div class="view-all">
           <a mat-button color="primary" routerLink="/appointments">View All Appointments</a>
         </div>
-      </mat-card-content>
-    </mat-card>
+      </div>
+    </div>
     
-    <mat-card class="dashboard-card recent-clients">
-      <mat-card-header>
-        <mat-card-title>Recent Clients</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <mat-list>
-          <mat-list-item *ngFor="let client of recentClients">
-            <div class="client-item">
-              <div class="client-name">{{ client.name }}</div>
-              <div class="client-last-seen">Last seen: {{ client.lastAppointment | date:'mediumDate' }}</div>
-              <div class="client-status">
-                <mat-chip [color]="client.status === 'active' ? 'primary' : 'warn'" selected>
-                  {{ client.status }}
-                </mat-chip>
-              </div>
+    <div class="tasks-section">
+      <div class="section-card fade-in delay-3">
+        <div class="section-header">
+          <h2>Recent Clients</h2>
+          <div class="section-actions">
+            <button mat-icon-button>
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </div>
+        </div>
+        
+        <div class="client-list">
+          <div class="client-item" *ngFor="let client of recentClients">
+            <div class="appointment-avatar">
+              {{ client.name.charAt(0) }}{{ client.name.split(' ').length > 1 ? client.name.split(' ')[1].charAt(0) : '' }}
             </div>
-          </mat-list-item>
+            <div class="appointment-details">
+              <div class="appointment-name">{{ client.name }}</div>
+              <div class="appointment-time">Last seen: {{ client.lastAppointment | date:'mediumDate' }}</div>
+            </div>
+            <div class="appointment-status" [ngClass]="client.status.toLowerCase()">
+              {{ client.status }}
+            </div>
+          </div>
           
-          <mat-list-item *ngIf="recentClients.length === 0">
-            <div class="no-data">No recent clients</div>
-          </mat-list-item>
-        </mat-list>
+          <div class="no-data" *ngIf="recentClients.length === 0">
+            No recent clients
+          </div>
+        </div>
         
         <div class="view-all">
           <a mat-button color="primary" routerLink="/clients">View All Clients</a>
         </div>
-      </mat-card-content>
-    </mat-card>
+      </div>
+    </div>
   </div>
   
   <div class="dashboard-row charts">
-    <mat-card class="dashboard-card chart-card">
-      <mat-card-header>
-        <mat-card-title>Revenue</mat-card-title>
-      </mat-card-header>
+    <mat-card class="dashboard-card chart-card fade-in delay-3">
       <mat-card-content>
+        <h3>Revenue</h3>
         <div class="chart-container">
           <!-- Chart will be rendered here using Chart.js -->
           <div class="chart-placeholder">
@@ -114,11 +154,9 @@
       </mat-card-content>
     </mat-card>
     
-    <mat-card class="dashboard-card chart-card">
-      <mat-card-header>
-        <mat-card-title>Missed Sessions</mat-card-title>
-      </mat-card-header>
+    <mat-card class="dashboard-card chart-card fade-in delay-3">
       <mat-card-content>
+        <h3>Missed Sessions</h3>
         <div class="chart-container">
           <!-- Chart will be rendered here using Chart.js -->
           <div class="chart-placeholder">
@@ -133,19 +171,17 @@
       </mat-card-content>
     </mat-card>
     
-    <mat-card class="dashboard-card chart-card">
-      <mat-card-header>
-        <mat-card-title>Client Satisfaction</mat-card-title>
-      </mat-card-header>
+    <mat-card class="dashboard-card chart-card fade-in delay-3">
       <mat-card-content>
+        <h3>Client Satisfaction</h3>
         <div class="chart-container">
           <!-- Chart will be rendered here using Chart.js -->
           <div class="chart-placeholder pie">
-            <div class="pie-segment" style="transform: rotate(0deg); background-color: rgba(76, 175, 80, 0.5);"></div>
-            <div class="pie-segment" style="transform: rotate(270deg); background-color: rgba(156, 204, 101, 0.5);"></div>
-            <div class="pie-segment" style="transform: rotate(315deg); background-color: rgba(255, 193, 7, 0.5);"></div>
-            <div class="pie-segment" style="transform: rotate(330deg); background-color: rgba(255, 152, 0, 0.5);"></div>
-            <div class="pie-segment" style="transform: rotate(345deg); background-color: rgba(244, 67, 54, 0.5);"></div>
+            <div class="pie-segment" style="transform: rotate(0deg); background-color: rgba(80, 200, 120, 0.7);"></div>
+            <div class="pie-segment" style="transform: rotate(270deg); background-color: rgba(74, 144, 226, 0.7);"></div>
+            <div class="pie-segment" style="transform: rotate(315deg); background-color: rgba(255, 193, 7, 0.7);"></div>
+            <div class="pie-segment" style="transform: rotate(330deg); background-color: rgba(255, 152, 0, 0.7);"></div>
+            <div class="pie-segment" style="transform: rotate(345deg); background-color: rgba(244, 67, 54, 0.7);"></div>
           </div>
         </div>
       </mat-card-content>
@@ -153,18 +189,16 @@
   </div>
   
   <div class="dashboard-row">
-    <mat-card class="dashboard-card full-width">
-      <mat-card-header>
-        <mat-card-title>Quick Actions</mat-card-title>
-      </mat-card-header>
+    <mat-card class="dashboard-card full-width fade-in delay-3">
       <mat-card-content>
+        <h3>Quick Actions</h3>
         <div class="quick-actions">
           <button mat-raised-button color="primary" routerLink="/clients/new">
             <mat-icon>person_add</mat-icon>
             Add New Client
           </button>
           
-          <button mat-raised-button color="primary" routerLink="/appointments/new">
+          <button mat-raised-button color="accent" routerLink="/appointments/new">
             <mat-icon>event</mat-icon>
             Schedule Appointment
           </button>
@@ -174,7 +208,7 @@
             Create Intake Form
           </button>
           
-          <button mat-raised-button color="primary" routerLink="/notes/new">
+          <button mat-raised-button color="accent" routerLink="/notes/new">
             <mat-icon>note_add</mat-icon>
             Add Session Note
           </button>
