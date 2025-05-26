@@ -4,6 +4,7 @@
  */
 
 @use '@angular/material' as mat;
+@use '_medical-components' as med;
 
 // Include the common styles for Angular Material
 @include mat.core();
@@ -11,29 +12,41 @@
 // Use a prebuilt theme instead of custom palettes
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
+/* Import Medical Components */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
 /* ===== Design System Variables ===== */
 :root {
-  /* Color Palette */
-  --primary-color: #00B8D4;      /* Vibrant Teal (inspired by Jane.app) */
-  --primary-dark: #0095a8;
-  --secondary-color: #50C878;    /* Green */
-  --accent-color: #7C4DFF;       /* Vibrant Purple */
-  --dark-color: #0D3B66;         /* Deep Blue (inspired by TherapyAppointment) */
-  --light-color: #F8FAFC;        /* Off White */
-  --gray-100: #F1F5F9;
-  --gray-200: #E2E8F0;
-  --gray-300: #CBD5E1;
-  --gray-400: #94A3B8;
-  --gray-500: #64748B;
-  --gray-600: #475569;
-  --gray-700: #334155;
-  --gray-800: #1E293B;
-  --gray-900: #0F172A;
-  
+  /* Color Palette - Medical Tech Theme */
+  --primary-color: #2b6cb0; /* Medical Blue */
+  --primary-dark: #1a4b7c;
+  --primary-light: #4299e1;
+  --secondary-color: #38a169; /* Healing Green */
+  --accent-color: #805ad5; /* Calming Purple */
+  --success-color: #48bb78; /* Success Green */
+  --warning-color: #ecc94b; /* Warning Yellow */
+  --error-color: #e53e3e; /* Error Red */
+  --info-color: #4299e1; /* Info Blue */
+
+  /* Neutral Colors */
+  --dark-color: #1a365d; /* Deep Medical Blue */
+  --light-color: #f7fafc; /* Clean White */
+  --gray-100: #edf2f7;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e0;
+  --gray-400: #a0aec0;
+  --gray-500: #718096;
+  --gray-600: #4a5568;
+  --gray-700: #2d3748;
+  --gray-800: #1a202c;
+  --gray-900: #171923;
+
   /* Typography */
   --heading-font: 'Poppins', sans-serif;
   --body-font: 'Inter', sans-serif;
-  
+
   /* Font sizes */
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
@@ -44,7 +57,7 @@
   --font-size-3xl: 1.875rem;
   --font-size-4xl: 2.25rem;
   --font-size-5xl: 3rem;
-  
+
   /* Spacing */
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
@@ -53,23 +66,31 @@
   --spacing-xl: 2rem;
   --spacing-xxl: 3rem;
   --spacing-xxxl: 5rem;
-  
+
   /* Border Radius */
   --border-radius-sm: 0.25rem;
   --border-radius-md: 0.5rem;
   --border-radius-lg: 1rem;
   --border-radius-xl: 2rem;
-  
+
   /* Shadows */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  
+
   /* Transitions */
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s ease;
   --transition-slow: 0.5s ease;
+
+  /* Medical Tech Specific */
+  --pulse-animation: pulse 2s infinite;
+  --float-animation: float 6s ease-in-out infinite;
+  --gradient-medical: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+  --gradient-success: linear-gradient(135deg, var(--success-color) 0%, var(--secondary-color) 100%);
+  --gradient-warning: linear-gradient(135deg, var(--warning-color) 0%, #f6ad55 100%);
+  --gradient-error: linear-gradient(135deg, var(--error-color) 0%, #fc8181 100%);
 }
 
 /* ===== Base Styles ===== */
@@ -84,16 +105,22 @@ html {
   font-size: 16px;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
-  font-family: var(--body-font), 'Roboto', "Helvetica Neue", sans-serif;
+  font-family: var(--body-font), 'Roboto', 'Helvetica Neue', sans-serif;
   color: var(--gray-800);
   line-height: 1.6;
   background-color: var(--light-color);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--heading-font), 'Roboto', sans-serif;
   font-weight: 600;
   line-height: 1.3;
@@ -163,86 +190,226 @@ img {
 }
 
 /* Margin utilities */
-.mt-1 { margin-top: var(--spacing-xs); }
-.mt-2 { margin-top: var(--spacing-sm); }
-.mt-3 { margin-top: var(--spacing-md); }
-.mt-4 { margin-top: var(--spacing-lg); }
-.mt-5 { margin-top: var(--spacing-xl); }
-.mt-6 { margin-top: var(--spacing-xxl); }
-.mt-7 { margin-top: var(--spacing-xxxl); }
+.mt-1 {
+  margin-top: var(--spacing-xs);
+}
+.mt-2 {
+  margin-top: var(--spacing-sm);
+}
+.mt-3 {
+  margin-top: var(--spacing-md);
+}
+.mt-4 {
+  margin-top: var(--spacing-lg);
+}
+.mt-5 {
+  margin-top: var(--spacing-xl);
+}
+.mt-6 {
+  margin-top: var(--spacing-xxl);
+}
+.mt-7 {
+  margin-top: var(--spacing-xxxl);
+}
 
-.mb-1 { margin-bottom: var(--spacing-xs); }
-.mb-2 { margin-bottom: var(--spacing-sm); }
-.mb-3 { margin-bottom: var(--spacing-md); }
-.mb-4 { margin-bottom: var(--spacing-lg); }
-.mb-5 { margin-bottom: var(--spacing-xl); }
-.mb-6 { margin-bottom: var(--spacing-xxl); }
-.mb-7 { margin-bottom: var(--spacing-xxxl); }
+.mb-1 {
+  margin-bottom: var(--spacing-xs);
+}
+.mb-2 {
+  margin-bottom: var(--spacing-sm);
+}
+.mb-3 {
+  margin-bottom: var(--spacing-md);
+}
+.mb-4 {
+  margin-bottom: var(--spacing-lg);
+}
+.mb-5 {
+  margin-bottom: var(--spacing-xl);
+}
+.mb-6 {
+  margin-bottom: var(--spacing-xxl);
+}
+.mb-7 {
+  margin-bottom: var(--spacing-xxxl);
+}
 
-.ml-1 { margin-left: var(--spacing-xs); }
-.ml-2 { margin-left: var(--spacing-sm); }
-.ml-3 { margin-left: var(--spacing-md); }
-.ml-4 { margin-left: var(--spacing-lg); }
-.ml-5 { margin-left: var(--spacing-xl); }
-.ml-6 { margin-left: var(--spacing-xxl); }
-.ml-7 { margin-left: var(--spacing-xxxl); }
+.ml-1 {
+  margin-left: var(--spacing-xs);
+}
+.ml-2 {
+  margin-left: var(--spacing-sm);
+}
+.ml-3 {
+  margin-left: var(--spacing-md);
+}
+.ml-4 {
+  margin-left: var(--spacing-lg);
+}
+.ml-5 {
+  margin-left: var(--spacing-xl);
+}
+.ml-6 {
+  margin-left: var(--spacing-xxl);
+}
+.ml-7 {
+  margin-left: var(--spacing-xxxl);
+}
 
-.mr-1 { margin-right: var(--spacing-xs); }
-.mr-2 { margin-right: var(--spacing-sm); }
-.mr-3 { margin-right: var(--spacing-md); }
-.mr-4 { margin-right: var(--spacing-lg); }
-.mr-5 { margin-right: var(--spacing-xl); }
-.mr-6 { margin-right: var(--spacing-xxl); }
-.mr-7 { margin-right: var(--spacing-xxxl); }
+.mr-1 {
+  margin-right: var(--spacing-xs);
+}
+.mr-2 {
+  margin-right: var(--spacing-sm);
+}
+.mr-3 {
+  margin-right: var(--spacing-md);
+}
+.mr-4 {
+  margin-right: var(--spacing-lg);
+}
+.mr-5 {
+  margin-right: var(--spacing-xl);
+}
+.mr-6 {
+  margin-right: var(--spacing-xxl);
+}
+.mr-7 {
+  margin-right: var(--spacing-xxxl);
+}
 
-.m-1 { margin: var(--spacing-xs); }
-.m-2 { margin: var(--spacing-sm); }
-.m-3 { margin: var(--spacing-md); }
-.m-4 { margin: var(--spacing-lg); }
-.m-5 { margin: var(--spacing-xl); }
-.m-6 { margin: var(--spacing-xxl); }
-.m-7 { margin: var(--spacing-xxxl); }
+.m-1 {
+  margin: var(--spacing-xs);
+}
+.m-2 {
+  margin: var(--spacing-sm);
+}
+.m-3 {
+  margin: var(--spacing-md);
+}
+.m-4 {
+  margin: var(--spacing-lg);
+}
+.m-5 {
+  margin: var(--spacing-xl);
+}
+.m-6 {
+  margin: var(--spacing-xxl);
+}
+.m-7 {
+  margin: var(--spacing-xxxl);
+}
 
 /* Padding utilities */
-.pt-1 { padding-top: var(--spacing-xs); }
-.pt-2 { padding-top: var(--spacing-sm); }
-.pt-3 { padding-top: var(--spacing-md); }
-.pt-4 { padding-top: var(--spacing-lg); }
-.pt-5 { padding-top: var(--spacing-xl); }
-.pt-6 { padding-top: var(--spacing-xxl); }
-.pt-7 { padding-top: var(--spacing-xxxl); }
+.pt-1 {
+  padding-top: var(--spacing-xs);
+}
+.pt-2 {
+  padding-top: var(--spacing-sm);
+}
+.pt-3 {
+  padding-top: var(--spacing-md);
+}
+.pt-4 {
+  padding-top: var(--spacing-lg);
+}
+.pt-5 {
+  padding-top: var(--spacing-xl);
+}
+.pt-6 {
+  padding-top: var(--spacing-xxl);
+}
+.pt-7 {
+  padding-top: var(--spacing-xxxl);
+}
 
-.pb-1 { padding-bottom: var(--spacing-xs); }
-.pb-2 { padding-bottom: var(--spacing-sm); }
-.pb-3 { padding-bottom: var(--spacing-md); }
-.pb-4 { padding-bottom: var(--spacing-lg); }
-.pb-5 { padding-bottom: var(--spacing-xl); }
-.pb-6 { padding-bottom: var(--spacing-xxl); }
-.pb-7 { padding-bottom: var(--spacing-xxxl); }
+.pb-1 {
+  padding-bottom: var(--spacing-xs);
+}
+.pb-2 {
+  padding-bottom: var(--spacing-sm);
+}
+.pb-3 {
+  padding-bottom: var(--spacing-md);
+}
+.pb-4 {
+  padding-bottom: var(--spacing-lg);
+}
+.pb-5 {
+  padding-bottom: var(--spacing-xl);
+}
+.pb-6 {
+  padding-bottom: var(--spacing-xxl);
+}
+.pb-7 {
+  padding-bottom: var(--spacing-xxxl);
+}
 
-.pl-1 { padding-left: var(--spacing-xs); }
-.pl-2 { padding-left: var(--spacing-sm); }
-.pl-3 { padding-left: var(--spacing-md); }
-.pl-4 { padding-left: var(--spacing-lg); }
-.pl-5 { padding-left: var(--spacing-xl); }
-.pl-6 { padding-left: var(--spacing-xxl); }
-.pl-7 { padding-left: var(--spacing-xxxl); }
+.pl-1 {
+  padding-left: var(--spacing-xs);
+}
+.pl-2 {
+  padding-left: var(--spacing-sm);
+}
+.pl-3 {
+  padding-left: var(--spacing-md);
+}
+.pl-4 {
+  padding-left: var(--spacing-lg);
+}
+.pl-5 {
+  padding-left: var(--spacing-xl);
+}
+.pl-6 {
+  padding-left: var(--spacing-xxl);
+}
+.pl-7 {
+  padding-left: var(--spacing-xxxl);
+}
 
-.pr-1 { padding-right: var(--spacing-xs); }
-.pr-2 { padding-right: var(--spacing-sm); }
-.pr-3 { padding-right: var(--spacing-md); }
-.pr-4 { padding-right: var(--spacing-lg); }
-.pr-5 { padding-right: var(--spacing-xl); }
-.pr-6 { padding-right: var(--spacing-xxl); }
-.pr-7 { padding-right: var(--spacing-xxxl); }
+.pr-1 {
+  padding-right: var(--spacing-xs);
+}
+.pr-2 {
+  padding-right: var(--spacing-sm);
+}
+.pr-3 {
+  padding-right: var(--spacing-md);
+}
+.pr-4 {
+  padding-right: var(--spacing-lg);
+}
+.pr-5 {
+  padding-right: var(--spacing-xl);
+}
+.pr-6 {
+  padding-right: var(--spacing-xxl);
+}
+.pr-7 {
+  padding-right: var(--spacing-xxxl);
+}
 
-.p-1 { padding: var(--spacing-xs); }
-.p-2 { padding: var(--spacing-sm); }
-.p-3 { padding: var(--spacing-md); }
-.p-4 { padding: var(--spacing-lg); }
-.p-5 { padding: var(--spacing-xl); }
-.p-6 { padding: var(--spacing-xxl); }
-.p-7 { padding: var(--spacing-xxxl); }
+.p-1 {
+  padding: var(--spacing-xs);
+}
+.p-2 {
+  padding: var(--spacing-sm);
+}
+.p-3 {
+  padding: var(--spacing-md);
+}
+.p-4 {
+  padding: var(--spacing-lg);
+}
+.p-5 {
+  padding: var(--spacing-xl);
+}
+.p-6 {
+  padding: var(--spacing-xxl);
+}
+.p-7 {
+  padding: var(--spacing-xxxl);
+}
 
 /* Flex utilities */
 .d-flex {
@@ -325,11 +492,21 @@ img {
   flex-shrink: 0;
 }
 
-.gap-1 { gap: var(--spacing-xs); }
-.gap-2 { gap: var(--spacing-sm); }
-.gap-3 { gap: var(--spacing-md); }
-.gap-4 { gap: var(--spacing-lg); }
-.gap-5 { gap: var(--spacing-xl); }
+.gap-1 {
+  gap: var(--spacing-xs);
+}
+.gap-2 {
+  gap: var(--spacing-sm);
+}
+.gap-3 {
+  gap: var(--spacing-md);
+}
+.gap-4 {
+  gap: var(--spacing-lg);
+}
+.gap-5 {
+  gap: var(--spacing-xl);
+}
 
 /* ===== Component Styles ===== */
 
@@ -529,13 +706,29 @@ img {
 }
 
 /* ===== Animations ===== */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
+@keyframes pulse {
+  0% {
+    transform: scale(1);
     opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
     transform: translateY(0);
   }
 }
@@ -567,19 +760,19 @@ img {
   .d-md-none {
     display: none !important;
   }
-  
+
   .d-md-block {
     display: block !important;
   }
-  
+
   .d-md-flex {
     display: flex !important;
   }
-  
+
   .flex-md-column {
     flex-direction: column !important;
   }
-  
+
   .flex-md-row {
     flex-direction: row !important;
   }
@@ -589,23 +782,23 @@ img {
   html {
     font-size: 14px;
   }
-  
+
   .d-sm-none {
     display: none !important;
   }
-  
+
   .d-sm-block {
     display: block !important;
   }
-  
+
   .d-sm-flex {
     display: flex !important;
   }
-  
+
   .flex-sm-column {
     flex-direction: column !important;
   }
-  
+
   .flex-sm-row {
     flex-direction: row !important;
   }
@@ -615,23 +808,21 @@ img {
   .d-xs-none {
     display: none !important;
   }
-  
+
   .d-xs-block {
     display: block !important;
   }
-  
+
   .d-xs-flex {
     display: flex !important;
   }
-  
+
   .flex-xs-column {
     flex-direction: column !important;
   }
-  
+
   .flex-xs-row {
     flex-direction: row !important;
   }
 }
 
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');

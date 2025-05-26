@@ -1,0 +1,315 @@
+// Import variables
+@use 'variables' as *;
+
+// Flexbox helpers
+@mixin flex($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+  @if $gap != 0 {
+    gap: $gap;
+  }
+}
+
+// Grid helpers
+@mixin grid($columns: 1, $gap: var(--spacing-base)) {
+  display: grid;
+  grid-template-columns: repeat($columns, minmax(0, 1fr));
+  gap: $gap;
+}
+
+// Media queries using the breakpoints
+@mixin breakpoint($size) {
+  $breakpoint-value: map-get($breakpoints, $size);
+  
+  @if $breakpoint-value != null {
+    @media (min-width: $breakpoint-value) {
+      @content;
+    }
+  } @else {
+    @error "Unknown breakpoint `#{$size}`. "
+          + "Available breakpoints are: #{map-keys($breakpoints)}.";
+  }
+}
+
+// Typography styles
+@mixin text-style($size: 'base', $weight: normal, $line-height: normal, $color: inherit) {
+  font-size: var(--font-size-#{$size});
+  font-weight: $weight;
+  
+  @if $line-height != normal {
+    line-height: var(--line-height-#{$line-height});
+  } @else {
+    line-height: var(--line-height-normal);
+  }
+  
+  @if $color != inherit {
+    color: $color;
+  }
+}
+
+// Heading styles
+@mixin heading($size: '2xl', $weight: bold, $color: var(--text-color)) {
+  @include text-style($size, $weight, 'tight', $color);
+  font-family: var(--font-heading);
+  margin-bottom: var(--spacing-sm);
+}
+
+// Interactive element states
+@mixin interactive-state($transition: var(--transition-normal), $y-offset: -2px) {
+  transition: all $transition;
+  
+  &:hover {
+    transform: translateY($y-offset);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+// Card style with configurable parameters
+@mixin card($padding: var(--spacing-lg), $radius: var(--radius-lg), $bg: white, $shadow: var(--shadow-md)) {
+  background: $bg;
+  border-radius: $radius;
+  padding: $padding;
+  box-shadow: $shadow;
+  transition: all var(--transition-normal);
+  border: 1px solid var(--border-color);
+  position: relative;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+// Form field styling
+@mixin form-field {
+  @include flex(column, flex-start, stretch, nowrap, var(--spacing-xs));
+  width: 100%;
+  margin-bottom: var(--spacing-md);
+  
+  label {
+    @include text-style('sm', 'medium');
+    color: var(--text-color);
+    margin-bottom: var(--spacing-xxs);
+  }
+  
+  input, textarea, select {
+    padding: var(--spacing-sm) var(--spacing-base);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-size: var(--font-size-base);
+    transition: all var(--transition-normal);
+    background-color: white;
+    
+    &:hover {
+      border-color: var(--primary-light);
+    }
+    
+    &:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(43, 108, 176, 0.2);
+    }
+    
+    &:disabled {
+      background-color: var(--color-gray-100);
+      cursor: not-allowed;
+    }
+    
+    &.error {
+      border-color: var(--error-color);
+      
+      &:focus {
+        box-shadow: 0 0 0 2px rgba(245, 101, 101, 0.2);
+      }
+    }
+  }
+  
+  .error-message {
+    @include text-style('sm', 'normal');
+    color: var(--error-color);
+    margin-top: var(--spacing-xxs);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xxs);
+  }
+}
+
+// Button styles
+@mixin button($variant: 'primary', $size: 'base') {
+  @include interactive-state;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  line-height: 1.2;
+  gap: var(--spacing-xs);
+  
+  // Size variants
+  @if $size == 'sm' {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-sm);
+  } @else if $size == 'lg' {
+    padding: var(--spacing-sm) var(--spacing-xl);
+    font-size: var(--font-size-lg);
+  } @else {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: var(--font-size-base);
+  }
+  
+  // Style variants
+  @if $variant == 'primary' {
+    background: var(--gradient-medical);
+    color: white;
+    border: none;
+    box-shadow: var(--shadow-sm);
+    
+    &:hover {
+      filter: brightness(110%);
+      box-shadow: var(--shadow-md);
+    }
+  } @else if $variant == 'secondary' {
+    background: white;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    
+    &:hover {
+      background-color: rgba(43, 108, 176, 0.1);
+    }
+  } @else if $variant == 'ghost' {
+    background: transparent;
+    color: var(--primary-color);
+    border: none;
+    
+    &:hover {
+      background: rgba(43, 108, 176, 0.05);
+    }
+  } @else if $variant == 'text' {
+    background: transparent;
+    color: var(--primary-color);
+    border: none;
+    padding: var(--spacing-xxs) var(--spacing-xs);
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Container with max-width and responsive padding
+@mixin container($max-width: 1200px) {
+  width: 100%;
+  max-width: $max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
+  
+  @include breakpoint('md') {
+    padding-left: var(--spacing-xl);
+    padding-right: var(--spacing-xl);
+  }
+}
+
+// Truncate text with ellipsis
+@mixin truncate($lines: 1) {
+  @if $lines == 1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+// Glass morphism effect
+@mixin glass-morphism($opacity: 0.8, $blur: 10px) {
+  background: rgba(255, 255, 255, $opacity);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+// Medical card style
+@mixin medical-card {
+  @include card;
+  border-top: 4px solid var(--primary-color);
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-medical);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+}
+
+// Medical icon style
+@mixin medical-icon($size: 50px) {
+  width: $size;
+  height: $size;
+  background: var(--gradient-medical);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--spacing-sm);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+  
+  &:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+// Gradient text
+@mixin gradient-text($gradient: var(--gradient-medical)) {
+  background: $gradient;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+// Responsive image
+@mixin responsive-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// Section styling
+@mixin section($padding-y: var(--spacing-3xl)) {
+  padding-top: $padding-y;
+  padding-bottom: $padding-y;
+  position: relative;
+  overflow: hidden;
+}
+

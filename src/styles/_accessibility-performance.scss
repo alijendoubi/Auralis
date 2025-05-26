@@ -1,0 +1,567 @@
+/* 
+ * Auralis Medical Clinic - Accessibility & Performance Refinements
+ * Advanced accessibility features and performance optimizations
+ */
+
+/* ===== 1. Enhanced Role Attributes for Medical Components ===== */
+
+// Medical card component roles
+.medical-card {
+  &[role="region"] {
+    aria-label: attr(data-card-title);
+    
+    // If no data-card-title is provided, use a default
+    &:not([data-card-title]) {
+      aria-label: "Medical Information";
+    }
+  }
+}
+
+// Patient information card roles
+.patient-card {
+  &[role="region"] {
+    aria-label: "Patient Information";
+  }
+  
+  .patient-header {
+    &[role="banner"] {
+      aria-level: "1";
+    }
+  }
+  
+  .patient-actions {
+    &[role="toolbar"] {
+      aria-label: "Patient Actions";
+    }
+  }
+}
+
+// Vital signs monitor roles
+.vital-signs-monitor {
+  &[role="region"] {
+    aria-label: "Vital Signs Monitor";
+  }
+  
+  &__grid .vital-item {
+    &[role="status"] {
+      aria-live: "polite";
+      aria-atomic: "true";
+    }
+  }
+}
+
+// Medical alert component roles
+.medical-alert {
+  &[role="alert"],
+  &[role="status"] {
+    aria-atomic: "true";
+  }
+  
+  &--error[role="alert"] {
+    aria-live: "assertive";
+  }
+  
+  &--warning[role="alert"],
+  &--info[role="status"],
+  &--success[role="status"] {
+    aria-live: "polite";
+  }
+}
+
+// Medical timeline roles
+.patient-timeline {
+  &[role="feed"] {
+    aria-busy: "false";
+    
+    &.loading {
+      aria-busy: "true";
+    }
+  }
+  
+  &__content .timeline-item {
+    &[role="article"] {
+      aria-roledescription: "timeline entry";
+    }
+  }
+}
+
+// Lab results table roles
+.lab-results-table {
+  &__content table {
+    &[role="table"] {
+      // Table caption for screen readers
+      caption {
+        @extend .sr-only;
+      }
+    }
+    
+    tbody tr {
+      &[role="row"] {
+        // Highlight abnormal results for assistive tech
+        &.result--high,
+        &.result--low {
+          aria-description: "Abnormal result";
+        }
+      }
+    }
+  }
+}
+
+// Appointment scheduler roles
+.appointment-scheduler {
+  &[role="application"] {
+    aria-label: "Appointment Scheduler";
+  }
+  
+  &__calendar {
+    &[role="grid"] {
+      aria-label: "Calendar";
+    }
+    
+    .day {
+      &[role="gridcell"] {
+        aria-selected: "false";
+        
+        &.selected {
+          aria-selected: "true";
+        }
+      }
+    }
+  }
+}
+
+// Health records viewer roles
+.health-records {
+  &__viewer {
+    &[role="dialog"] {
+      aria-modal: "true";
+      aria-labelledby: "document-title";
+    }
+  }
+}
+
+/* ===== 2. Enhanced Touch Feedback for Mobile Devices ===== */
+
+// Touch ripple effect for interactive elements
+.touch-ripple-effect {
+  position: relative;
+  overflow: hidden;
+  
+  // Container for the ripple
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.4) 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition: transform 0.5s, opacity 1s;
+  }
+  
+  // Active state for the ripple
+  &:active::after {
+    transform: scale(0, 0);
+    opacity: 0.3;
+    transition: 0s;
+  }
+}
+
+// Apply touch ripple effect to buttons
+.medical-button,
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-accent,
+.form-action button {
+  @extend .touch-ripple-effect;
+}
+
+// Enhanced touch targets for better mobile ergonomics
+@media (hover: none) and (pointer: coarse) {
+  .enhanced-touch-target {
+    // Increase the touch target size without affecting visual size
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      z-index: 1;
+    }
+    
+    // Apply to buttons and interactive elements
+    &.medical-button,
+    &.btn,
+    &.form-action button {
+      min-height: 44px;
+      padding: 0.75rem 1.25rem;
+    }
+    
+    // For small icon buttons
+    &.icon-button {
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  
+  // Add tactile feedback
+  .tactile-feedback {
+    &:active {
+      transform: scale(0.97);
+      transition: transform 0.1s;
+    }
+  }
+}
+
+// Optimized touch scrolling with momentum
+.touch-optimized-scroll {
+  -webkit-overflow-scrolling: touch;
+  
+  // Prevent elastic bounce at end of scroll
+  overscroll-behavior: contain;
+  
+  // Snap scroll points for carousel-like scrolling
+  &.snap-scroll {
+    scroll-snap-type: x mandatory;
+    
+    & > * {
+      scroll-snap-align: start;
+    }
+  }
+}
+
+/* ===== 3. Optimized Transitions and Animations ===== */
+
+// Hardware-accelerated animations
+.hardware-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform, opacity; // Hint to browser for optimization
+}
+
+// Apply to animated components
+.medical-card,
+.patient-timeline__content .timeline-item,
+.vital-signs-monitor__grid .vital-item,
+.medical-button {
+  @extend .hardware-accelerated;
+}
+
+// Optimize animations with reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .reduced-motion {
+    // Use minimal or no animations
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    
+    // Elements that should respect reduced motion settings
+    &.medical-card,
+    &.btn,
+    &.medical-button,
+    &.animated-element {
+      transition: none !important;
+      animation: none !important;
+      transform: none !important;
+    }
+  }
+}
+
+// Optimize rendering performance with containment
+.optimize-rendering {
+  // Contain layout calculations
+  contain: content;
+  
+  // Apply to scrollable containers with many elements
+  &.scrollable-content {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px; // Prevent layout shifts
+  }
+}
+
+// Apply to large lists of items
+.lab-results-table__content,
+.health-records__content .records-list,
+.patient-timeline__content {
+  @extend .optimize-rendering;
+}
+
+// Optimize transitions for better performance
+.optimized-transition {
+  // Efficient properties to animate
+  transition-property: transform, opacity;
+  transition-duration: var(--transition-normal);
+  
+  // Use opacity/transform instead of display/visibility
+  &.hidden {
+    transform: translateY(10px);
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  &.visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* ===== 4. Enhanced Keyboard Navigation Patterns ===== */
+
+// Focus ring for keyboard navigation
+.keyboard-focus-ring {
+  // Default: no visible outline for mouse users
+  outline: none;
+  
+  // Enhanced visible outline for keyboard users
+  &:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px rgba(43, 108, 176, 0.2);
+    position: relative;
+    z-index: 2;
+    
+    // High contrast mode support
+    @media (forced-colors: active) {
+      outline-color: Highlight;
+      outline-style: solid;
+    }
+  }
+}
+
+// Apply focus rings to interactive elements
+.btn,
+.medical-button,
+.medical-input,
+.medical-select,
+.medical-checkbox input,
+.medical-radio input {
+  @extend .keyboard-focus-ring;
+}
+
+// Skip to content link for keyboard users
+.skip-to-content {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--primary-color);
+  color: white;
+  z-index: 9999;
+  transition: top 0.3s ease;
+  
+  // Show when focused
+  &:focus {
+    top: 0;
+  }
+}
+
+// Enhanced keyboard grid navigation
+.keyboard-grid-navigation {
+  &[role="grid"] {
+    // Support for arrow key navigation
+    
+    [role="gridcell"],
+    [role="row"] {
+      &:focus {
+        outline: 2px solid var(--primary-color);
+        outline-offset: -2px;
+        position: relative;
+        z-index: 1;
+      }
+      
+      &[aria-selected="true"] {
+        background-color: rgba(43, 108, 176, 0.1);
+      }
+    }
+  }
+}
+
+// Apply grid navigation to calendar
+.appointment-scheduler__calendar .days {
+  @extend .keyboard-grid-navigation;
+}
+
+// Focus trap for modals
+.focus-trap {
+  // Special elements at start and end to trap focus
+  
+  .focus-start,
+  .focus-end {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+    
+    &:focus {
+      // When focused, move focus to appropriate element
+      // This logic requires JavaScript to work properly
+    }
+  }
+}
+
+/* ===== 5. Improved Loading State Transitions ===== */
+
+// Skeleton loader with improved animation
+.skeleton-loader {
+  background: linear-gradient(
+    90deg,
+    var(--gray-200) 25%,
+    var(--gray-300) 37%,
+    var(--gray-200) 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  @extend .hardware-accelerated;
+  border-radius: var(--border-radius-md);
+  
+  // Text skeleton
+  &--text {
+    height: 1em;
+    margin-bottom: 0.6em;
+    
+    &.line-full { width: 100%; }
+    &.line-long { width: 85%; }
+    &.line-medium { width: 65%; }
+    &.line-short { width: 40%; }
+  }
+  
+  // Circle skeleton (e.g., avatars)
+  &--circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+  }
+  
+  // Card skeleton
+  &--card {
+    height: 200px;
+    margin-bottom: var(--spacing-md);
+  }
+}
+
+// Smoother loading state transitions
+.loading-transition {
+  position: relative;
+  transition: opacity 0.3s ease;
+  
+  &.loading {
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 1;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(43, 108, 176, 0.1);
+      border-top-color: var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      z-index: 2;
+    }
+  }
+}
+
+// Smart loading states for components
+.smart-loading {
+  min-height: 100px; // Prevent layout shifts
+  
+  // Initial load skeleton
+  &.initial-load {
+    .skeleton-container {
+      display: block;
+    }
+    
+    .content-container {
+      display: none;
+    }
+  }
+  
+  // Content loaded
+  &.loaded {
+    .skeleton-container {
+      display: none;
+    }
+    
+    .content-container {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+  }
+  
+  // Subsequent reloads/refreshes
+  &.refreshing {
+    .content-container {
+      opacity: 0.6;
+      pointer-events: none;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(43, 108, 176, 0.1);
+        border-top-color: var(--primary-color);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+    }
+  }
+}
+
+// Progressively enhanced loading for images
+.progressive-image {
+  position: relative;
+  overflow: hidden;
+  
+  .placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--gray-200);
+    transition: opacity 0.3s ease;
+  }
+  
+  img {
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    
+    &.loaded {
+      opacity
+

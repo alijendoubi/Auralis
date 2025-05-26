@@ -2,13 +2,9 @@
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
-  "eslint.validate": [
-    "javascript",
-    "typescript",
-    "html"
-  ],
+  "eslint.validate": ["javascript", "typescript", "html"],
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "angular.enable-strict-mode-prompt": false,
@@ -39,10 +35,5 @@
     "**/*.code-search": true,
     "**/dist": true
   },
-  "cSpell.words": [
-    "firestore",
-    "sendgrid",
-    "tailwindcss",
-    "twilio"
-  ]
+  "cSpell.words": ["firestore", "sendgrid", "tailwindcss", "twilio"]
 }
